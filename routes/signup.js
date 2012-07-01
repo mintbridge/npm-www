@@ -11,10 +11,12 @@ function signup (req, res) {
 
 function show (req, res) {
   req.model.load("myprofile", req);
+  req.model.load('news', req)
   req.model.end(function(er, m) {
     if(er) return res.error(er);
     res.template('layout.ejs', {
       content: 'signup-form.ejs',
+      news: m.news,
       profile: m.myprofile,
       error: null,
       data: null

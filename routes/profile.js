@@ -8,6 +8,7 @@ function profile (req, res) {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     return res.error(405)
   }
+  req.model.load('news', req)
   // get the user's own profile
   req.model.load('myprofile', req)
   // get the profile of the specified account, if there is one.
@@ -35,6 +36,7 @@ function showProfile (req, res, profile) {
 
   var td = { content: "profile.ejs"
            , profile: profile
+           , news: m.news
            , self: req.model.myprofile
            , fields: config.profileFields }
   res.template('layout.ejs', td)

@@ -6,11 +6,13 @@ function packagePage (req, res) {
 
   req.model.load('myprofile', req)
   req.model.load('package', req.params)
+  req.model.load('news', req)
   req.model.end(function (er, m) {
     if (er) return res.error(er)
     if (!m.package) return res.error(404)
     var locals = {
       content: "package-page.ejs",
+      news: m.news,
       package: m.package,
       profile: m.myprofile
     }

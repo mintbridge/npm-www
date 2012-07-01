@@ -12,10 +12,12 @@ function login (req, res) {
       return req.session.get('auth', function (er, data) {
         if (data && !data.error) return res.redirect("/profile")
         req.model.load("myprofile", req);
+        req.model.load('news', req)
         req.model.end(function(er, m) {
           // error just means we're not logged in.
           var locals = {
             content: 'login.ejs',
+            news: m.news,
             profile: m && m.myprofile
           }
 
